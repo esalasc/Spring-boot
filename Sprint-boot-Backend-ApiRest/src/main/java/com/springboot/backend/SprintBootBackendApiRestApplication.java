@@ -15,8 +15,6 @@ import com.springboot.backend.models.services.IClienteService;
 @RestController
 public class SprintBootBackendApiRestApplication {
 
-	@Autowired
-	IClienteService iClienteService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SprintBootBackendApiRestApplication.class, args);
@@ -25,11 +23,6 @@ public class SprintBootBackendApiRestApplication {
 	@RequestMapping("saludar")
 	public String saludo() {
 		return "Hola mundo";
-	}
-	
-	@RequestMapping("listasClientes")
-	public List<Cliente> listasClientes() {
-		return iClienteService.findAll();
-	}
+	}	
 
 }
