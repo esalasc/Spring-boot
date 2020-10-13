@@ -1,9 +1,13 @@
 package com.springboot.backend.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,8 +46,21 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/clientes/{id}")
-	public Cliente mostrarCliente(@PathVariable Long id) {
-		return iClienteService.findById(id);
+	public ResponseEntity<?> mostrarCliente(@PathVariable Long id) {
+		Map<String,String> respuesta =  new HashMap<>();
+		try {
+			Cliente cliente = iClienteService.findById(id);
+			if(cliente!=null) {
+				return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);	
+			}else {
+				respuesta.put("mensaje", "Cliente con ID: "+id+" no encontrado.");			
+				return new ResponseEntity<Map<String,String>>(respuesta,HttpStatus.NOT_FOUND);
+			}
+		}catch(DataAccessException dEx) {
+			respuesta.put("mensaje", "Error al consultar cliente.");
+			respuesta.put("error", dEx.getMessage());
+			return new ResponseEntity<String>("asasas", HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PutMapping("/modificarCliente/{id}")
