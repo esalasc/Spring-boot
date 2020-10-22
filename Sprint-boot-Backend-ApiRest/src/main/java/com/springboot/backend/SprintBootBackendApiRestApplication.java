@@ -1,16 +1,12 @@
 package com.springboot.backend;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springboot.backend.models.entity.Cliente;
-import com.springboot.backend.models.services.IClienteService;
-
+@EnableEurekaClient
 @SpringBootApplication
 @RestController
 public class SprintBootBackendApiRestApplication {
